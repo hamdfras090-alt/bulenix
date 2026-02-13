@@ -1,153 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>اختبار الهاتف - Bluenix</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .test-container {
-            padding: 20px;
-            background: #f0f0f0;
-            margin: 10px 0;
-        }
-
-        .test-box {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 2px solid #0a3a5a;
-        }
-
-        .status-ok {
-            color: green;
-            font-weight: bold;
-        }
-
-        .status-error {
-            color: red;
-            font-weight: bold;
-        }
-
-        .width-tester {
-            background: linear-gradient(to right, red, blue);
-            height: 50px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <h1 style="text-align: center; margin: 20px 0;">اختبار التصميم المتجاوب</h1>
-
-        <div class="test-container">
-            <h2>📱 اختبار العرض</h2>
-            <div class="width-tester">
-                هذا الشريط يجب أن يملأ العرض بالكامل بدون تمرير أفقي
-            </div>
-        </div>
-
-        <div class="test-container">
-            <h2>📦 اختبار شبكة المنتجات</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-img-container" style="background: #ddd;"></div>
-                    <div class="product-info">
-                        <div class="product-title">منتج تجريبي 1</div>
-                        <div class="product-price">100 د.ل</div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img-container" style="background: #ddd;"></div>
-                    <div class="product-info">
-                        <div class="product-title">منتج تجريبي 2</div>
-                        <div class="product-price">200 د.ل</div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img-container" style="background: #ddd;"></div>
-                    <div class="product-info">
-                        <div class="product-title">منتج تجريبي 3</div>
-                        <div class="product-price">150 د.ل</div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img-container" style="background: #ddd;"></div>
-                    <div class="product-info">
-                        <div class="product-title">منتج تجريبي 4</div>
-                        <div class="product-price">300 د.ل</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="test-container">
-            <h2>🏷️ اختبار الأقسام</h2>
-            <div class="category-grid">
-                <div class="category-card">
-                    <span>قسم 1</span>
-                </div>
-                <div class="category-card">
-                    <span>قسم 2</span>
-                </div>
-                <div class="category-card">
-                    <span>قسم 3</span>
-                </div>
-                <div class="category-card">
-                    <span>قسم 4</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="test-box">
-            <h3>✅ قائمة الفحص:</h3>
-            <ul style="line-height: 2;">
-                <li>✓ هل يوجد تمرير أفقي؟
-                    <span class="status-ok">لا يجب أن يكون هناك تمرير أفقي</span>
-                </li>
-                <li>✓ هل المنتجات تتناسب مع الشاشة؟
-                    <span class="status-ok">يجب أن تكون في عمودين</span>
-                </li>
-                <li>✓ هل الأقسام واضحة؟
-                    <span class="status-ok">يجب أن تكون متناسقة</span>
-                </li>
-                <li>✓ هل النصوص قابلة للقراءة؟
-                    <span class="status-ok">يجب أن تكون واضحة</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="test-box">
-            <h3>📏 معلومات الشاشة:</h3>
-            <p>عرض الشاشة: <span id="screenWidth"></span>px</p>
-            <p>عرض النافذة: <span id="windowWidth"></span>px</p>
-            <p>عرض المستند: <span id="docWidth"></span>px</p>
-        </div>
-    </div>
-
-    <script>
-        // Display screen information
-        document.getElementById('screenWidth').textContent = window.screen.width;
-        document.getElementById('windowWidth').textContent = window.innerWidth;
-        document.getElementById('docWidth').textContent = document.documentElement.scrollWidth;
-
-        // Check for horizontal scroll
-        window.addEventListener('load', function () {
-            const hasHorizontalScroll = document.documentElement.scrollWidth > window.innerWidth;
-            if (hasHorizontalScroll) {
-                alert('⚠️ تحذير: يوجد تمرير أفقي! العرض الفعلي: ' + document.documentElement.scrollWidth + 'px');
-            } else {
-                console.log('✅ ممتاز! لا يوجد تمرير أفقي');
-            }
-        });
-    </script>
-</body>
-
-</html>
