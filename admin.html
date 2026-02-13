@@ -1,241 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة بلونيكس | لوحة التحكم المتطورة</title>
-    <link rel="stylesheet" href="sss.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-
-<body>
-    <div class="admin-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <img src="logo.jpg" alt="Logo">
-                <div class="logo-text">
-                    <span class="brand">Bluenix</span>
-                    <span class="badge">المدير</span>
-                </div>
-            </div>
-            <nav>
-                <a href="#" class="nav-item active" data-tab="add">
-                    <i data-lucide="plus-square"></i>
-                    <span>إضافة منتج جديد</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="list">
-                    <i data-lucide="layout-grid"></i>
-                    <span>إدارة المخزون</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="orders">
-                    <i data-lucide="shopping-bag"></i>
-                    <span>الطلبات الواردة</span>
-                    <span class="orders-badge" id="ordersBadge" style="display:none;">0</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="slider">
-                    <i data-lucide="image"></i>
-                    <span>إدارة السلايدر</span>
-                </a>
-                <a href="#" class="nav-item" data-tab="categories">
-                    <i data-lucide="layers"></i>
-                    <span>إدارة الأقسام</span>
-                </a>
-
-                <a href="index.html" class="nav-item">
-                    <i data-lucide="external-link"></i>
-                    <span>زيارة المتجر</span>
-                </a>
-                <a href="#" class="nav-item logout-btn" id="logoutBtn" style="color: #ff4d4d;">
-                    <i data-lucide="log-out"></i>
-                    <span>تسجيل الخروج</span>
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <p>© 2026 بلونيكس ليبيا</p>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="top-bar">
-                <div class="welcome-text">
-                    <h1>مرحباً بك، حمد 👋</h1>
-                    <p>إليك ما يمكنك فعله اليوم في متجرك</p>
-                </div>
-                <div class="stats-mini">
-                    <div class="stat-box">
-                        <span id="pCount">0</span>
-                        <label>منتج معروض</label>
-                    </div>
-                </div>
-            </header>
-
-            <div id="addSection" class="content-section">
-                <div class="card glass-card">
-                    <div class="card-header">
-                        <i data-lucide="file-plus"></i>
-                        <h2>تفاصيل المنتج الجديد</h2>
-                    </div>
-                    <form id="addProductForm">
-                        <div class="form-layout">
-                            <!-- Image Upload Zone -->
-                            <div class="image-upload-zone" id="dropZone">
-                                <input type="file" id="pFileInput" accept="image/*" hidden>
-                                <div class="upload-placeholder" id="uploadPlaceholder">
-                                    <i data-lucide="image-plus"></i>
-                                    <p>اسحب الصورة هنا أو اضغط للاختيار</p>
-                                    <span>يدعم PNG, JPG (الحد الأقصى 2MB)</span>
-                                </div>
-                                <img id="imagePreview" src="" alt="Preview" hidden>
-                                <button type="button" class="remove-img-btn" id="removeImg" hidden>تغيير الصورة</button>
-                            </div>
-
-                            <div class="form-inputs">
-                                <div class="form-grid">
-                                    <div class="form-group">
-                                        <label>اسم المنتج</label>
-                                        <input type="text" id="pName" placeholder="مثلاً: ساعة حائط ليبية" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>السعر (د.ل)</label>
-                                        <input type="number" id="pPrice" placeholder="0.00" step="0.01" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>التصنيف</label>
-                                        <select id="pCategory">
-                                            <!-- يتم تحميل الأقسام ديناميكياً -->
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>حالة العرض</label>
-                                        <select id="pStatus">
-                                            <option value="active">متوفر</option>
-                                            <option value="preorder">طلب مسبق</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>وصف المنتج</label>
-                                    <textarea id="pDesc"
-                                        placeholder="اكتب تفاصيل مميزة عن المنتج لإغراء الزبائن..."></textarea>
-                                </div>
-                                <button type="submit" class="submit-btn">
-                                    <i data-lucide="check-circle"></i>
-                                    نشر المنتج الآن
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div id="listSection" class="content-section" style="display: none;">
-                <div class="card grid-card">
-                    <div class="card-header">
-                        <i data-lucide="list"></i>
-                        <h2>جميع المنتجات المضافة</h2>
-                    </div>
-                    <div id="adminProductList" class="admin-product-grid">
-                        <!-- Items injected by JS -->
-                    </div>
-                </div>
-            </div>
-
-            <div id="ordersSection" class="content-section" style="display: none;">
-                <div class="card grid-card">
-                    <div class="card-header">
-                        <i data-lucide="shopping-bag"></i>
-                        <h2>الطلبات الواردة من الزبائن</h2>
-                    </div>
-                    <div id="ordersList" class="orders-container">
-                        <!-- Orders will be injected by JS -->
-                    </div>
-                </div>
-            </div>
-
-            <div id="sliderSection" class="content-section" style="display: none;">
-                <div class="card glass-card">
-                    <div class="card-header">
-                        <i data-lucide="image"></i>
-                        <h2>إضافة صور شريط العرض (Slider)</h2>
-                    </div>
-                    <form id="addSliderForm">
-                        <div class="form-layout">
-                            <div class="image-upload-zone" id="sliderDropZone">
-                                <input type="file" id="sliderFileInput" accept="image/*" hidden>
-                                <div class="upload-placeholder" id="sliderUploadPlaceholder">
-                                    <i data-lucide="image-plus"></i>
-                                    <p>اسحب صورة السلايدر هنا</p>
-                                </div>
-                                <img id="sliderImagePreview" src="" alt="Preview" hidden>
-                                <button type="button" class="remove-img-btn" id="removeSliderImg" hidden>حذف</button>
-                            </div>
-                            <div class="form-inputs">
-                                <p style="margin-bottom: 20px; color: #666;">سيتم عرض هذه الصور في واجهة المتجر الرئيسية
-                                    في قسم الـ Hero.</p>
-                                <button type="submit" class="submit-btn" style="margin-top: 0;">
-                                    <i data-lucide="plus"></i>
-                                    إضافة للسلايدر
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="card grid-card" style="margin-top: 30px;">
-                    <div class="card-header">
-                        <i data-lucide="images"></i>
-                        <h2>صور السلايدر الحالية</h2>
-                    </div>
-                    <div id="adminSliderList" class="admin-product-grid">
-                        <!-- Slider images injected by JS -->
-                    </div>
-                </div>
-            </div>
-
-            <div id="categoriesSection" class="content-section" style="display: none;">
-                <div class="card glass-card">
-                    <div class="card-header">
-                        <i data-lucide="layers"></i>
-                        <h2>إضافة قسم جديد</h2>
-                    </div>
-                    <form id="addCategoryForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>اسم القسم</label>
-                                <input type="text" id="catName" placeholder="مثلاً: ساعات" required>
-                            </div>
-                            <div class="form-group">
-                                <label>أيقونة القسم (Lucide Name)</label>
-                                <input type="text" id="catIcon" placeholder="مثلاً: watch" value="package">
-                                <small>يمكنك العثور على الأسماء في <a href="https://lucide.dev/icons"
-                                        target="_blank">Lucide Icons</a></small>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-btn" style="margin-top: 20px;">
-                            <i data-lucide="plus"></i>
-                            إضافة القسم
-                        </button>
-                    </form>
-                </div>
-                <div class="card grid-card" style="margin-top: 30px;">
-                    <div class="card-header">
-                        <i data-lucide="list"></i>
-                        <h2>الأقسام الحالية</h2>
-                    </div>
-                    <div id="adminCategoryList" class="admin-product-grid">
-                        <!-- Categories injected by JS -->
-                    </div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <script type="module" src="firebase-config.js"></script>
-    <script type="module" src="admin.js"></script>
-    <script>lucide.createIcons();</script>
-</body>
-
-</html>
