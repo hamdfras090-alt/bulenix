@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>متجر بلونيكس | هدايا ومنتجات مصنوعة يدوياً</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">
+                <img src="logo.jpg" alt="Bluenix Logo">
+            </a>
+
+            <div class="search-container">
+                <input type="text" placeholder="ابحث عن أي شيء...">
+                <button class="search-btn">
+                    <i data-lucide="search"></i>
+                </button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="nav-icon-btn" id="userBtn">
+                    <i data-lucide="user"></i>
+                    <span class="notification-badge" id="userOrderBadge" style="display: none;">0</span>
+                </button>
+                <button class="nav-icon-btn" id="giftBtn">
+                    <i data-lucide="gift"></i>
+                </button>
+                <button class="nav-icon-btn">
+                    <i data-lucide="shopping-cart"></i>
+                    <span class="cart-count" style="display: none;">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tracking Info Modal -->
+    <div id="trackingInfoModal" class="modal tracking-info-modal">
+        <div class="modal-content">
+            <button id="closeTrackingInfo" class="close-btn"><i data-lucide="x"></i></button>
+            <div class="tracking-info-body">
+                <img src="tracking-info.jpg" alt="Tracking Process" class="tracking-info-img">
+                <div class="tracking-info-footer">
+                    <button id="skipTrackingInfo" class="primary-btn">فهمت، تابع لتتبع الطلب</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Hero Section with Image Slider -->
+        <section class="hero-slider-section">
+            <div class="slider-container" id="heroSlider">
+                <!-- Images will be dynamically loaded -->
+            </div>
+
+
+            <!-- Slider Controls -->
+            <button class="slider-arrow prev" id="heroPrev"><i data-lucide="chevron-right"></i></button>
+            <button class="slider-arrow next" id="heroNext"><i data-lucide="chevron-left"></i></button>
+
+            <!-- Progress Dots -->
+            <div class="slider-dots" id="heroDots">
+                <!-- Dots will be dynamically loaded -->
+            </div>
+        </section>
+
+
+        <!-- New Products Slider -->
+        <section class="new-products-slider">
+            <div class="slider-header">
+                <h2 class="section-title">
+                    <i data-lucide="sparkles"></i>
+                    أحدث المنتجات المضافة
+                </h2>
+                <div class="slider-controls">
+                    <button class="slider-btn prev-btn" id="sliderPrev">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+                    <button class="slider-btn next-btn" id="sliderNext">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                </div>
+                <div class="slider-wrapper">
+                    <div class="slider-track" id="newProductsSlider">
+                        <!-- Products will be dynamically loaded here -->
+                    </div>
+                </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <div class="slider-header" style="margin-bottom: 20px;">
+                <h2 class="section-title">
+                    <i data-lucide="layers"></i>
+                    أقسام المنتجات
+                </h2>
+            </div>
+            <div id="categoryGrid" class="category-grid">
+                <!-- Categories will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- Delivery Banner Section -->
+        <section class="delivery-banner-section">
+            <div class="delivery-banner-container">
+                <img src="delivery-banner.png" alt="توصيل سريع لجميع مناطق ليبيا" class="delivery-banner-img">
+            </div>
+        </section>
+
+
+        <!-- Products Section -->
+        <section class="products">
+            <h2 class="section-title">اكتشف أفضل ما لدينا لشتاء 2026</h2>
+            <div id="productGrid" class="product-grid">
+                <!-- Products will be dynamically loaded from main.js -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3>سلة التسوق</h3>
+            <button id="closeCart" class="close-btn"><i data-lucide="x"></i></button>
+        </div>
+        <div id="cartItemsList" class="cart-items-list">
+            <!-- Items will be injected here -->
+            <p class="empty-cart-msg">سلتك فارغة حالياً.</p>
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-total">
+                <span>الإجمالي:</span>
+                <span id="cartTotalAmount">0.00 د.ل</span>
+            </div>
+            <button id="checkoutBtn" class="primary-btn full-width" disabled>إتمام الشراء</button>
+        </div>
+    </div>
+    <div id="cartOverlay" class="overlay"></div>
+
+    <!-- Enhanced Checkout Modal -->
+    <div id="checkoutModal" class="modal checkout-modal">
+        <div class="modal-content">
+            <button id="closeCheckout" class="close-btn"><i data-lucide="x"></i></button>
+            <div class="checkout-container">
+                <div class="checkout-header">
+                    <h2>إتمام الطلب</h2>
+                    <div class="checkout-steps">
+                        <span class="step active">المعلومات</span>
+                        <div class="line"></div>
+                        <span class="step">التأكيد</span>
+                    </div>
+                </div>
+
+                <div class="checkout-body">
+                    <form id="purchaseForm" class="checkout-form-minimal">
+                        <div class="input-group-modern">
+                            <i data-lucide="user"></i>
+                            <input type="text" id="checkoutName" placeholder="الاسم بالكامل" required>
+                        </div>
+                        <div class="input-group-modern">
+                            <i data-lucide="phone"></i>
+                            <input type="tel" id="checkoutPhone" placeholder="091XXXXXXX" required>
+                        </div>
+                        <div class="input-group-modern">
+                            <i data-lucide="building"></i>
+                            <input type="text" id="checkoutCity" placeholder="المدينة (مثال: طرابلس، بنغازي...)"
+                                required>
+                        </div>
+                        <div class="input-group-modern">
+                            <i data-lucide="map"></i>
+                            <input type="text" id="checkoutArea" placeholder="المنطقة (مثال: الزاوية، الكريمية...)"
+                                required>
+                        </div>
+                        <div class="input-modern-textarea">
+                            <i data-lucide="map-pin"></i>
+                            <textarea id="checkoutAddress" placeholder="عنوان التوصيل التفصيلي (الشارع، رقم المبنى...)"
+                                required></textarea>
+                        </div>
+
+                        <div class="payment-selection-clean">
+                            <label>طريقة الدفع</label>
+                            <div class="payment-options">
+                                <div class="payment-option active" data-payment="cod">
+                                    <i data-lucide="truck"></i>
+                                    <span>الدفع عند الاستلام</span>
+                                </div>
+                                <div class="payment-option" data-payment="bank">
+                                    <i data-lucide="landmark"></i>
+                                    <span>حوالة مصرفية</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer Details (Hidden by default) -->
+                        <div id="bankTransferDetails" class="bank-details-box" style="display: none;">
+                            <div class="bank-info-item">
+                                <label>رقم الحساب:</label>
+                                <span class="account-number">10225937020601</span>
+                                <button type="button" class="copy-small-btn" onclick="copyText('10225937020601')">
+                                    <i data-lucide="copy"></i>
+                                </button>
+                            </div>
+                            <div class="bank-instructions">
+                                <p>يرجى تحويل المبلغ إلى الحساب أعلاه، ثم إرسال صورة الإيصال عبر الواتساب لتأكيد طلبك.
+                                </p>
+                                <div class="bank-actions">
+                                    <a href="https://wa.me/218944275130" target="_blank" class="whatsapp-direct-btn">
+                                        <i data-lucide="message-circle"></i> إرسال الإيصال عبر الواتساب
+                                    </a>
+                                    <button type="button" id="confirmTransferBtn" class="confirm-transfer-small-btn">
+                                        تأكيد الدفع بالحوالة
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Instructions Image Modal -->
+                        <div id="bankDetailsModal" class="bank-image-modal">
+                            <div class="bank-image-modal-content">
+                                <button type="button" id="closeBankModal" class="close-img-modal">
+                                    <i data-lucide="x"></i>
+                                </button>
+                                <img src="bank-instructions.png" alt="خطوات تأكيد الطلب">
+                                <button type="button" id="skipBankModal" class="primary-btn full-width">فهمت، تابع
+                                    الطلب</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group-modern coupon-group">
+                            <i data-lucide="ticket"></i>
+                            <input type="text" id="couponCode" placeholder="كود التخفيض (BLUE5)">
+                            <button type="button" id="applyCouponBtn" class="apply-btn">تطبيق</button>
+                        </div>
+
+                        <div class="checkout-summary-compact">
+                            <div class="summary-row">
+                                <span>إجمالي المنتجات:</span>
+                                <span id="checkoutSubtotal">0.00 د.ل</span>
+                            </div>
+                            <div class="summary-row discount-row" id="discountRow">
+                                <span>تخفيض (5%):</span>
+                                <span id="checkoutDiscount">-0.00 د.ل</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>المطلوب دفعه:</span>
+                                <span id="checkoutFinalTotal">0.00 د.ل</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="confirm-order-btn">
+                            تأكيد الطلب الآن
+                            <i data-lucide="arrow-left"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Modal (Enhanced) -->
+    <div id="userModal" class="modal user-profile-modal">
+        <div class="modal-content">
+            <button id="closeUser" class="close-btn"><i data-lucide="x"></i></button>
+
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i data-lucide="user" size="40"></i>
+                </div>
+                <div class="profile-info-text">
+                    <h2>أهلاً بك في بلونيكس</h2>
+                    <p>عضو منذ 2026 • ليبيا</p>
+                </div>
+            </div>
+
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="favs">
+                    <i data-lucide="heart"></i>
+                    <span>المحفوظات</span>
+                </button>
+                <button class="tab-btn" data-tab="orders">
+                    <i data-lucide="package"></i>
+                    <span>طلباتي</span>
+                </button>
+                <button class="tab-btn" data-tab="track">
+                    <i data-lucide="truck"></i>
+                    <span>تتبع طلبك</span>
+                </button>
+                <button class="tab-btn" data-tab="settings">
+                    <i data-lucide="settings"></i>
+                    <span>الإعدادات</span>
+                </button>
+            </div>
+
+            <div id="favoritesList" class="profile-tab-content active" data-content="favs">
+                <!-- Favorites injected here -->
+            </div>
+
+            <div id="ordersList" class="profile-tab-content" data-content="orders">
+                <div class="empty-state">
+                    <i data-lucide="package"></i>
+                    <p>لا توجد طلبات سابقة بعد</p>
+                </div>
+            </div>
+
+            <div id="trackOrderContent" class="profile-tab-content" data-content="track">
+                <div class="empty-state">
+                    <i data-lucide="truck"></i>
+                    <p>لا توجد طلبات لتتبعها حالياً</p>
+                </div>
+            </div>
+
+            <div id="settingsContent" class="profile-tab-content" data-content="settings">
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i data-lucide="palette"></i>
+                            <span>المظهر (ليلي/نهاري)</span>
+                        </div>
+                        <div class="theme-switch" id="themeToggle">
+                            <div class="switch-handle"></div>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i data-lucide="languages"></i>
+                            <span>اللغة</span>
+                        </div>
+                        <select class="settings-select">
+                            <option value="ar">العربية</option>
+                            <option value="en">English (قريباً)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productDetailModal" class="modal detail-modal">
+        <div class="modal-content">
+            <button id="closeDetail" class="close-btn"><i data-lucide="x"></i></button>
+            <div id="detailContent">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Modal -->
+    <div id="successModal" class="modal success-modal">
+        <div class="modal-content success-content">
+            <div class="success-icon-wrapper">
+                <i data-lucide="check-circle"></i>
+            </div>
+            <h2>شكراً لك على الطلب!</h2>
+            <p>تم استلام طلبك بنجاح. سيتواصل معك المندوب قريباً لتأكيد الموعد والتسليم.</p>
+            <div class="order-id-badge">رقم الطلب: <span id="displayOrderId">#0000</span></div>
+            <button id="closeSuccessBtn" class="primary-btn full-width">فهمت، العودة للمتجر</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>حول متجر بلونيكس</h3>
+                <p>متجر مختص في بيع جميع انواع المنتجات بافضل جوده</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">سياسة الخصوصية</a>
+                <a href="https://www.facebook.com/share/17gMNrqtwC/" target="_blank" class="facebook-link">
+                    <i data-lucide="facebook"></i>
+                    فيسبوك
+                </a>
+                <a href="#">شروط الخدمة</a>
+                <a href="#">اتصل بنا</a>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 متجر بلونيكس. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Professional Loader -->
+    <div id="globalLoader" class="global-loader active">
+        <img src="logo.jpg" alt="Bluenix Logo" class="loader-logo">
+    </div>
+
+    <!-- Category Page View (Full Screen) -->
+    <div id="categoryPage" class="category-page">
+        <div class="container" style="padding: 40px 20px;">
+            <div class="category-page-header">
+                <button id="closeCategoryPage" class="back-btn-modern">
+                    <i data-lucide="arrow-right"></i>
+                    الرجوع للرئيسية
+                </button>
+                <div class="category-page-title-box">
+                    <h2 id="categoryPageTitle">اسم القسم</h2>
+                    <p id="categoryPageCount">جاري التحميل...</p>
+                </div>
+            </div>
+            <div id="categoryPageGrid" class="product-grid">
+                <!-- Products will be injected here -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+        <div class="container bottom-nav-container">
+            <a href="#" class="bottom-nav-item active" id="homeHomeBtn">
+                <i data-lucide="home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#" class="bottom-nav-item" id="mobileCatBtn">
+                <i data-lucide="layers"></i>
+                <span>الأقسام</span>
+            </a>
+            <a href="#" class="bottom-nav-item" id="mobileUserBtn">
+                <i data-lucide="user"></i>
+                <span>حسابي</span>
+            </a>
+            <a href="#" class="bottom-nav-item" id="mobileCartBtn">
+                <i data-lucide="shopping-cart"></i>
+                <span>السلة</span>
+            </a>
+        </div>
+    </div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="main.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+
+
+</html>
